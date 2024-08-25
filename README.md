@@ -1,4 +1,5 @@
 # tas_kagit_makas
+Aygaz Python Bootcamp Projesi
 ## Projenin kodlarına [buraya tıklayarak](https://colab.research.google.com/drive/1I8MRhItL3AbWe-_ssjyQnTmYhRcKVMhL#scrollTo=xsXAhcV25R1S) ulaşabilirsiniz.
 ```
 pip install tabulate
