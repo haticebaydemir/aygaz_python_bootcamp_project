@@ -1,91 +1,34 @@
-# tas_kagit_makas
-Aygaz Python Bootcamp Projesi - Taş Kağıt Makas Oyunu
-## Projenin kodlarına [buraya tıklayarak](https://colab.research.google.com/drive/1I8MRhItL3AbWe-_ssjyQnTmYhRcKVMhL#scrollTo=xsXAhcV25R1S) ulaşabilirsiniz.
-```
-pip install tabulate
-# Bu kütüphane sonuçları tablo halinde yazdırmak için.
-```
-```
-import random
-from tabulate import tabulate
+# Taş-Kağıt-Makas Oyunu
 
-def get_computer_choice():
-    """Bilgisayarın rastgele bir seçim yapmasını sağlar."""
-    choices = ['taş', 'kağıt', 'makas']
-    return random.choice(choices) #Random seçim.
+Bu Python uygulaması, klasik Taş-Kağıt-Makas oyununu terminal üzerinde bilgisayara karşı oynayabileceğiniz bir interaktif oyun sunar. Oyun, kullanıcı ile bilgisayar arasında birden fazla tur oynanabilir ve sonuçlar her tur sonunda tablo halinde görüntülenir.
 
-def get_user_choice():
-    """Kullanıcının geçerli bir seçim yapmasını sağlar."""
-    choice = input("Taş, Kağıt veya Makas seçin: ").lower() # Kullanıcının girdiği seçimi küçük harfe çeviriyoruz. Böylece büyük/küçük harf farkı olmaz.
-    while choice not in ['taş', 'kağıt', 'makas']:
-        print("Geçersiz seçim. Lütfen Taş, Kağıt veya Makas girin.") #Geçersiz bir seçim yaparsa, doğru bir seçim yapana kadar kullanıcıya tekrar sorulur.
-        choice = input("Taş, Kağıt veya Makas seçin: ").lower()
-    return choice
+## Proje Hakkında
+Taş-Kağıt-Makas oyunu, kullanıcıların seçimlerine göre kazananın belirlendiği basit bir oyun algoritması üzerine kuruludur. Proje, Python'daki *random* modülünü kullanarak bilgisayarın rastgele bir seçim yapmasını sağlar ve *tabulate* kütüphanesi ile oyun sonuçları görsel olarak daha anlaşılır bir şekilde sunulur.
 
-def determine_winner(user_choice, computer_choice):
-    """Kullanıcının ve bilgisayarın seçimlerini karşılaştırarak oyunun sonucunu belirler."""
-    if user_choice == computer_choice:
-        return "Beraberlik"
-    elif (user_choice == 'taş' and computer_choice == 'makas') or \
-         (user_choice == 'kağıt' and computer_choice == 'taş') or \
-         (user_choice == 'makas' and computer_choice == 'kağıt'): #Taş makası yener, kağıt taşı yener, makas kağıdı yener. Bu kuralları kullanarak sonucu belirleriz.
-        return "Kullanıcı kazandı"
-    else:
-        return "Bilgisayar kazandı"
+Bu proje, Python programlama bilgilerini geliştirmek ve terminalde basit bir oyun deneyimi sunmak amacıyla geliştirilmiştir.
 
-def play_single_game(round_number):
-    """Tek bir oyunu oynar ve sonucu döndürür."""
-    user_choice = get_user_choice()
-    computer_choice = get_computer_choice()
-    
-    print(f"Bilgisayarın seçimi: {computer_choice.capitalize()}")
-    
-    result = determine_winner(user_choice, computer_choice)
-    print(result)
-    return round_number, user_choice, computer_choice, result
+## Özellikler
 
-def play_game():
-    """Oyunu birden fazla tur oynar ve genel sonuçları tablo şeklinde gösterir."""
-    print("Taş-Kağıt-Makas oyununa hoş geldiniz!")
-    
-    rounds = int(input("Kaç tur oynamak istersiniz? "))
-    
-    game_results = []
-    user_score = 0
-    computer_score = 0
-    
-    for i in range(rounds):
-        print(f"\nTur {i+1}:")
-        round_number, user_choice, computer_choice, result = play_single_game(i + 1)
-        
-        if result == "Kullanıcı kazandı":
-            user_score += 1
-        elif result == "Bilgisayar kazandı":
-            computer_score += 1
-        
-        # Oyun sonuçlarını toplama
-        game_results.append([round_number, user_choice, computer_choice, result])
-    
-    print("\nOyun Bitti!")
-    
-    # Skorları ve oyun sonuçlarını tablo halinde yazdırma
-    print(f"\nKullanıcı Skoru: {user_score}")
-    print(f"Bilgisayar Skoru: {computer_score}")
-    
-    if user_score > computer_score:
-        print("Tebrikler, oyunu kazandınız!")
-    elif user_score < computer_score:
-        print("Bilgisayar kazandı. Daha şanslı bir sonraki oyunda!")
-    else:
-        print("Beraberlik! Yine de iyi oynadınız.")
-    
-    # Sonuçları tablo olarak yazdırma
-    headers = ["Tur", "Kullanıcı Seçimi", "Bilgisayar Seçimi", "Sonuç"]
-    print("\nOyun Sonuçları:")
-    print(tabulate(game_results, headers=headers, tablefmt="grid"))
+- **Rastgele Bilgisayar Seçimi**: Bilgisayar her turda taş, kağıt veya makas seçeneklerinden birini rastgele seçer.
+- **Kullanıcı Girdisi**: Kullanıcı geçerli bir seçim yapmak zorundadır. Geçersiz bir seçim yaparsa, tekrar denemesi istenir.
+- **Kazananı Belirleme**: Oyun kurallarına göre her turun kazananı belirlenir.
+- **Çoklu Tur Desteği**: Kullanıcı belirlediği sayıda tur oynayabilir.
+- **Tablo Formatında Sonuçlar**: Her turdan sonra ve oyun sonunda sonuçlar tablo halinde kullanıcıya sunulur.
 
-if __name__ == "__main__":
-    play_game()
+## Kullanım
 
+Oyunu çalıştırdığınızda, size kaç tur oynamak istediğiniz sorulacak. Ardından, her turda Taş, Kağıt veya Makas seçeneklerinden birini girerek bilgisayarla karşılaşacaksınız. Oyun her turdan sonra sonucu ve sonunda genel skoru tablo formatında görüntüler.
 
-```
+## 
+Kod Yapısı
+Projenin ana dosyası main.py olup, şu temel işlevleri içerir:
+
+- **get_computer_choice()**: Bilgisayarın taş, kağıt veya makas seçimi yapmasını sağlar.
+- **get_user_choice()**: Kullanıcının geçerli bir seçim yapmasını sağlar.
+- **determine_winner()**: Kullanıcı ve bilgisayarın seçimlerine göre kazananı belirler.
+- **play_single_game()**: Tek bir turu oynatır ve sonucu döndürür.
+- **play_game()**: Birden fazla tur oynatır ve sonuçları tablo halinde gösterir.
+
+## Testler
+
+Proje basit ve terminal tabanlı olduğundan, test etmek için oyunu birkaç kez çalıştırıp farklı seçimlerle sonuçları gözlemleyebilirsiniz.
